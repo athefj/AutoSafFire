@@ -1,8 +1,8 @@
 mode: full
-sample_name: PNG15_h3
+sample_name: PNG15_h2_2
 query: /projects/standard/hsiehph/gordo893/samples/PNG15b/verkko1.4.1/PNG15_ONT_HIC/assembly.haplotype1.fasta
 reference: /projects/standard/hsiehph/shared/hsiehph_shared/assemblies/CHM13/T2T/v1.1/chm13.v1.1.fasta
-coords_file: /projects/standard/hsiehph/shared/javid017-home/jobs/seg_dups/athef_files/all_samples/pt2/PNGs_plot/20kb_flank_plots/test
-gene_file: /projects/standard/hsiehph/shared/javid017-home/jobs/seg_dups/athef_files/all_samples/pt2/PNGs_plot/20kb_flank_plots/CHM13_v1.1_genes_filtered_merged.bed  # optional, omit or leave empty to skip
-saffire_repo_path: /projects/standard/hsiehph/shared/javid017-home/jobs/AutoSafFire
+coords_file: ../sample_coords_file.txt 
+gene_file: 
+saffire_repo_path: /users/7/javid017/AutoSafFire/
 

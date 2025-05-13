@@ -75,25 +75,35 @@ if MODE == "full":
         output:
             touch("results/{sample}/pushed_metadata.done")
         params:
-            repo=SAFFIRE_REPO
+            repo=SAFFIRE_REPO,
+            formatted_rel=SAFFIRE_FORMATTED  # relative path within repo
         run:
+            import subprocess
+
             metadata_file = os.path.join(params.repo, "datasets/metadata.csv")
-            new_line = f"custom,datasets/custom/{wildcards.sample}_saffireFMT,{wildcards.sample}_T2T,CHM13_v1.1"
+            new_line = f"custom,{params.formatted_rel},{QUERY_NAME}_T2T,{REF_NAME}"
+
             if os.path.exists(metadata_file):
                 with open(metadata_file) as f:
                     if new_line in f.read():
                         print("Metadata already exists. Skipping append.")
-                        shell("touch {output}")
+                        shell(f"touch {output[0]}")
                         return
+
             with open(metadata_file, "a") as f:
                 f.write(new_line + "\n")
-            shell("""
+
+            shell(f"""
                 cd {params.repo}
                 git add .
-                git commit -m "New snakemake run"
+                if ! git diff --cached --quiet; then
+                    git commit -m "New snakemake run for {QUERY_NAME}"
+                fi
                 git push
-""")
-            shell("touch {output}")
+            """)
+
+            shell(f"touch {output[0]}")
+
 
 #######################################
 # STEP 4: PREPROCESS INPUT COORDINATES
